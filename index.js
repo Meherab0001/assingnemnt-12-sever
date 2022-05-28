@@ -40,6 +40,7 @@ async function run() {
     const reviewsCollection = client.db('tools-manufacturer').collection('reviews')
     const ordersCollection = client.db('tools-manufacturer').collection('order')
     const usersCollection = client.db('tools-manufacturer').collection('users')
+    const profileCollection = client.db('tools-manufacturer').collection('profile')
 
     app.get('/tools', async (req, res) => {
       const quary = {}
@@ -147,6 +148,8 @@ async function run() {
     }
     );
 
+ 
+
     app.get('/p-order/:id', async (req, res) => {
       const id = req.params.id;
    
@@ -156,7 +159,18 @@ async function run() {
     })
 
 
+    app.post('/profile', async (req, res) => {
+      const newUserProfile =req.body
+      const profile = await toolsCollection.insertOne(newUserProfile);
+      res.send(profile)
+    }),
 
+    app.get('/user-profile/:email', async (req, res) => {
+      const email = req.params.email;
+      const filter = { email: email };
+      const profile = await profileCollection.find(filter).toArray()
+      res.send(profile)
+    })
 
 
 
