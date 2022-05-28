@@ -17,6 +17,8 @@ app.use(express.json())
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.es8es.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 
+
+//verify jwt token
 function verifyJWT(req, res, next) {
 
   const authHeader = req.headers.authorization;
@@ -150,7 +152,7 @@ async function run() {
 
  
 
-    app.get('/p-order/:id', async (req, res) => {
+    app.get('/p-order/:id',verifyJWT, async (req, res) => {
       const id = req.params.id;
    
       const query = { _id: ObjectId(id) }
@@ -159,13 +161,13 @@ async function run() {
     })
 
 
-    app.post('/profile', async (req, res) => {
+    app.post('/profile',verifyJWT, async (req, res) => {
       const newUserProfile =req.body
-      const profile = await toolsCollection.insertOne(newUserProfile);
+      const profile = await profileCollection.insertOne(newUserProfile);
       res.send(profile)
     }),
 
-    app.get('/user-profile/:email', async (req, res) => {
+    app.get('/profile/:email', async (req, res) => {
       const email = req.params.email;
       const filter = { email: email };
       const profile = await profileCollection.find(filter).toArray()
