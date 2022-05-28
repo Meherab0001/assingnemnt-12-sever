@@ -47,7 +47,7 @@ async function run() {
       const tools = await toolsCollection.find(quary).toArray()
       res.send(tools)
     }),
-
+//payment intent api
     app.post('/create-paymetn-intent',verifyJWT,async(req,res)=>{
       const order=req.body;
       const price=order.total;
