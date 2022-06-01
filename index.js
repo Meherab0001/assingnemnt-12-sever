@@ -51,7 +51,7 @@ async function run() {
     }),
 //payment intent api
 
-//that problem
+//that problem find here
     app.post('/create-paymetn-intent',verifyJWT,async(req,res)=>{
       const order=req.body;
       const price=order.total;
