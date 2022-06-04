@@ -6,7 +6,7 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken');
 require('dotenv').config()
 const stripe = require("stripe")(process.env.STIPE_SECRET_KEY)
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 4000;
 
 app.use(cors())
 app.use(express.json())
@@ -64,7 +64,7 @@ async function run() {
       res.send({clientSecret:paymentIntent.client_secret})
 
     })
-//testing comment
+//all tools here
     app.post('/tools', async (req, res) => {
       const newTools =req.body
       const tools = await toolsCollection.insertOne(newTools);
